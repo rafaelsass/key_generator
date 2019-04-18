@@ -2,25 +2,20 @@ import random
 import string as s
 
 def gerador(dificuldade, num_caracteres):
-    a = s.ascii_lowercase
-    a = [i for i in a]
-    A = [i.upper() for i in a]
-    b = s.punctuation
-    b = [i for i in b]
-    c = s.digits
-    c = [str(i) for i in c]
+    d = s.printable
+    d = [x for x in d if x not in s.whitespace]
     if dificuldade == "FRACA":
-        random_list = random.choices(b + a + c, k=num_caracteres)
-        while all([any(x in random_list for x in a), any(x in random_list for x in b),any(x in random_list for x in c )])is False:
-            random_list = random.choices(b + a + c, k=num_caracteres)
+        d = [x for x in d if x not in s.ascii_uppercase]
+        random_list = random.choices(d, k=num_caracteres)
+        while all([any(x in random_list for x in s.ascii_lowercase), any(x in random_list for x in s.digits),any(x in random_list for x in s.punctuation)])is False:
+            random_list = random.choices(d, k=num_caracteres)
         random_list = [str(i) for i in random_list]
-        print(random_list)
         print("Senha gerada:", "".join(random_list))
 
     elif dificuldade == "FORTE":
-        random_list = random.choices(b + a + c + A, k=num_caracteres)
-        while all([any(x in random_list for x in a), any(x in random_list for x in b),any(x in random_list for x in c), any(x in random_list for x in A)])is False:
-             random_list = random.choices(b + a + c + A, k=num_caracteres)
+        random_list = random.choices(d, k=num_caracteres)
+        while all([any(x in random_list for x in s.ascii_lowercase), any(x in random_list for x in s.digits),any(x in random_list for x in s.punctuation), any(x in random_list for x in s.ascii_uppercase)])is False:
+             random_list = random.choices(d, k=num_caracteres)
         random_list = [str(i) for i in random_list]
         print("Senha gerada:", "".join(random_list))
 
