@@ -2,22 +2,23 @@ import random
 import string as s
 
 def gerador(dificuldade, num_caracteres):
-    d = s.printable
-    d = [x for x in d if x not in s.whitespace]
-    if dificuldade == "FRACA":
-        d = [x for x in d if x not in s.ascii_uppercase]
-        random_list = random.choices(d, k=num_caracteres)
-        while all([any(x in random_list for x in s.ascii_lowercase), any(x in random_list for x in s.digits),any(x in random_list for x in s.punctuation)])is False:
-            random_list = random.choices(d, k=num_caracteres)
-        random_list = [str(i) for i in random_list]
-        print("Senha gerada:", "".join(random_list))
+	filtro = lambda x,y: any(a in x for a in y)
+	d = s.printable
+	d = [x for x in d if x not in s.whitespace]
+	if dificuldade == "FRACA":
+	    d = [x for x in d if x not in s.ascii_uppercase]
+	    r_list = random.choices(d, k=num_caracteres)
+	    while all([filtro(r_list,s.ascii_lowercase), filtro(r_list, s.digits),filtro(r_list,s.punctuation)])is False:
+        	r_list = random.choices(d, k=num_caracteres)
+	    r_list = [str(i) for i in r_list]
+	    print("Senha gerada:", "".join(r_list))
 
-    elif dificuldade == "FORTE":
-        random_list = random.choices(d, k=num_caracteres)
-        while all([any(x in random_list for x in s.ascii_lowercase), any(x in random_list for x in s.digits),any(x in random_list for x in s.punctuation), any(x in random_list for x in s.ascii_uppercase)])is False:
-             random_list = random.choices(d, k=num_caracteres)
-        random_list = [str(i) for i in random_list]
-        print("Senha gerada:", "".join(random_list))
+	elif dificuldade == "FORTE":
+	    r_list = random.choices(d, k=num_caracteres) 
+	    while all([filtro(r_list,s.ascii_lowercase), filtro(r_list,s.digits),filtro(r_list,s.punctuation), filtro(r_list,s.ascii_uppercase)])is False:
+	         r_list = random.choices(d, k=num_caracteres)
+	    r_list = [str(i) for i in r_list]
+	    print("Senha gerada:", "".join(r_list))
 
 def valores():
     loop = True
